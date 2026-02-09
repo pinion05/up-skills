@@ -2,6 +2,9 @@
   "name": "up-skills",
   "private": true,
   "type": "module",
+  "bin": {
+    "up-skills": "./src/cli/index.ts"
+  },
   "scripts": {
     "dev:api": "bun run src/api/server.ts",
     "test": "bun test"
