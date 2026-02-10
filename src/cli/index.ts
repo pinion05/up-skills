@@ -1,6 +1,8 @@
 import { writeConfigFile } from "./config";
 import { resolveConfig } from "./config";
 import { pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
+import { realpathSync } from "node:fs";
 
 type ParsedArgs =
   | { command: "init"; baseUrl?: string; homeDir?: string }
@@ -183,7 +185,18 @@ Env:
 }
 
 // Compatible with Node ESM and bundlers. When imported for tests, this won't run.
-const isMain = import.meta.url === pathToFileURL(process.argv[1] ?? "").href;
+function safeRealpath(p: string) {
+  try {
+    return realpathSync(p);
+  } catch {
+    return p;
+  }
+}
+
+const argv1 = process.argv[1] ?? "";
+const argvHref = argv1 ? pathToFileURL(safeRealpath(argv1)).href : "";
+const selfHref = pathToFileURL(safeRealpath(fileURLToPath(import.meta.url))).href;
+const isMain = argvHref !== "" && argvHref === selfHref;
 if (isMain) {
   main().catch((e) => die(String(e?.message ?? e)));
 }

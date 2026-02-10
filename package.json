@@ -10,7 +10,7 @@
   "scripts": {
     "dev:api": "bun run src/api/server.ts",
     "start": "bun run src/api/server.ts",
-    "build:cli": "bun build --target=node --format=esm --outfile=dist/up-skills.js --banner='#!/usr/bin/env node\\n' src/cli/index.ts",
+    "build:cli": "bun build --target=node --format=esm --outfile=dist/up-skills.js src/cli/index.ts && node scripts/add-shebang.mjs dist/up-skills.js",
     "prepublishOnly": "bun run build:cli",
     "test": "bun test"
   },
