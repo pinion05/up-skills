@@ -1,13 +1,25 @@
 {
-  "name": "up-skills",
-  "private": true,
+  "name": "@pinion05/up-skills",
+  "version": "0.1.0",
+  "description": "A thin 'skills playlist' layer for Codex CLI: store pointers to SKILL.md and fetch on demand.",
+  "license": "MIT",
   "type": "module",
   "bin": {
-    "up-skills": "./src/cli/index.ts"
+    "up-skills": "./dist/up-skills.js"
   },
   "scripts": {
     "dev:api": "bun run src/api/server.ts",
+    "start": "bun run src/api/server.ts",
+    "build:cli": "bun build --target=node --format=esm --outfile=dist/up-skills.js --banner='#!/usr/bin/env node\\n' src/cli/index.ts",
+    "prepublishOnly": "bun run build:cli",
     "test": "bun test"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pinion05/up-skills.git"
   },
   "dependencies": {
     "hono": "^4.11.9",

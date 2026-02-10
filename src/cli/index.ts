@@ -1,6 +1,6 @@
-#!/usr/bin/env bun
 import { writeConfigFile } from "./config";
 import { resolveConfig } from "./config";
+import { pathToFileURL } from "node:url";
 
 type ParsedArgs =
   | { command: "init"; baseUrl?: string; homeDir?: string }
@@ -92,7 +92,7 @@ async function httpJson(baseUrl: string, path: string, init?: RequestInit) {
 }
 
 async function main() {
-  const parsed = parseArgs(Bun.argv.slice(2));
+  const parsed = parseArgs(process.argv.slice(2));
   if (parsed.command === "help") {
     console.log(`up-skills (MVP)
 
@@ -182,7 +182,8 @@ Env:
   }
 }
 
-if (import.meta.main) {
+// Compatible with Node ESM and bundlers. When imported for tests, this won't run.
+const isMain = import.meta.url === pathToFileURL(process.argv[1] ?? "").href;
+if (isMain) {
   main().catch((e) => die(String(e?.message ?? e)));
 }
-

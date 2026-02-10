@@ -3,6 +3,7 @@ docs/
 
 # Dependencies / build output
 node_modules/
+dist/
 
 # Local DB (dev)
 *.sqlite

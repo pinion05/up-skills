@@ -1,0 +1,10 @@
+docs/
+node_modules/
+test/
+src/api/
+skill/
+scripts/
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+
